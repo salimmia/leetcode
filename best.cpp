@@ -2,49 +2,59 @@
 
 using namespace std;
 
-class Solution{
+class Solution {
 public:
-	string convert(string s, int numRows){
-		if(numRows == 1 or numRows >= s.size()) return s;
-
-		int index = 0, direction = false;
-
-		vector<string> row(numRows, "");
-
-		for(int i = 0; i < s.size(); i++){
-			if(index == 0 or index == numRows - 1) direction ^= 1;
-
-			row[index] += s[i];
-
-			if(direction) index++;
-			else index--;
+	vector<int>twoSum(vector<int>&numbers, int terget){
+		int start_index = 0, last_index = numbers.size() - 1;
+		
+		int sum = numbers[start_index] + numbers[last_index];
+		while(sum != terget){
+			if(sum < terget){
+				sum -= numbers[start_index];
+				sum += numbers[++start_index];
+			}
+			else{
+				sum -= numbers[last_index];
+				sum += numbers[--last_index];
+			}
 		}
-
-		string zigzag = "";
-
-		for(auto _row: row){
-			zigzag += _row;
-		}
-
-		return zigzag;
-
+		return {start_index + 1, last_index + 1};	
 	}
 };
 
-void solve(){
-	string s, ss;
-	int k;
+void solve(int test_case){
+	int n, terget;
+
+	cin >> n >> terget;
+
+	vector<int>v;
+
+	for(int i = 0; i < n; i++){
+		int x;
+		cin >> x;
+		v.push_back(x);
+	}
 
 	Solution obj;
 
-	cin >> s >> k >> ss;
+	vector<int>indexes = obj.twoSum(v, terget);
+	for(auto x: indexes) cout << x << " ";
+	cout << endl;
 
-	if(obj.convert(s, k) == ss){
-		cout << "Accepted" << endl;
+	vector<int>ans;
+
+	for(int i = 0; i < 2; i++){
+		int x;
+		cin >> x;
+		ans.push_back(x);
 	}
-	else cout << "Wrong Answer" << endl;
+
+	if(ans == indexes){
+		//cout << obj.convert(s, k) << " " << ss << endl;
+		cout << "Accepted"  << endl;
+	}
+	else cout << "Wrong Answer on test " << test_case << endl;
 	
-	return;
 }
 
 int main(){
@@ -52,11 +62,9 @@ int main(){
 
 	cin >> t;
 
-	while(t--){
-		solve();
+	for(int test = 1; test <= t; test++){
+		solve(test);
 	}
 	
 	return 0;
 }
-
-
