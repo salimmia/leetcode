@@ -4,25 +4,18 @@ using namespace std;
 
 class Solution {
 public:
-	int binary_search(vector<int>&numbers, int val){
-		int lo = 0, hi = numbers.size() - 1;
+	int maxArea(vector<int>&height){
+		int left = 0, right = height.size() - 1;
 
-		while(lo < hi){
-			int mid = (lo + hi + 1) >> 1;
-			if(numbers[mid] <= val) lo =  mid;
-			else hi = mid - 1;
-		}
-		return lo;
-	}
+		int _max = 0;
+		while(left < right){
+			_max = max(_max, min(height[left], height[right]) * (right - left));
 
-	vector<int>twoSum(vector<int>&numbers, int terget){
-		for(int index = 0; index < numbers.size() - 1; index++){
-			int need_index = binary_search(numbers, terget - numbers[index]); 
-			if(numbers[index] + numbers[need_index] == terget){
-				return {index + 1, need_index + 1};
-			}
+			if(height[left] < height[right]) left++;
+			else right--;
 		}
-		return {0, 0};
+
+		return _max;
 	}
 };
 
@@ -41,19 +34,11 @@ void solve(int test_case){
 
 	Solution obj;
 
-	vector<int>indexes = obj.twoSum(v, terget);
-	for(auto x: indexes) cout << x << " ";
-	cout << endl;
+	int max_area = obj.maxArea(v);
+	
+	cout << max_area << endl;
 
-	vector<int>ans;
-
-	for(int i = 0; i < 2; i++){
-		int x;
-		cin >> x;
-		ans.push_back(x);
-	}
-
-	if(ans == indexes){
+	if(max_area == terget){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
