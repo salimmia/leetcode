@@ -4,66 +4,57 @@ using namespace std;
 
 class Solution {
 public:
-    string convert(string s, int numRows) {
-		int index = 0;
-
-		vector<int>indexes;
-
-		if(numRows == 1) return s;
-		if(s.size() <= numRows) return s;		
-		string ans = "";
-
-
-		while(index < s.size() and index >= 0){
-			indexes.push_back(index);
-			ans += s[index];
-			index += (numRows - 2) * 2 + 2;
+	bool is_character(char c){
+		if((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')){
+			return true;
 		}
-		indexes.push_back(index);
-		
-		int up_down = 1;
+		return false;
+	}
 
-		int numRowsTemp = numRows - 1;
+	char lower(char c){
+		if(c <= 'Z') c =  (c - 'A') + 'a';
+		return c;
+	}
 
-		while(--numRowsTemp){
-			for(int i = 0; i < indexes.size(); i++){
-				int pre_index = indexes[i] - up_down;
-				int post_index = indexes[i] + up_down;
-				if(i == 0 and post_index < s.size()){
-					ans += s[post_index];
-				}
-				else{
-					if(pre_index >= 0 and pre_index < s.size()) ans += s[pre_index];
-					if(post_index >= 0 and post_index < s.size()) ans += s[post_index];
-				}
+    bool isPalindrome(string s) {
+		int start_index = 0, last_index = s.size() - 1;
+
+		while(start_index < last_index){
+			if(!is_character(s[start_index])){
+				start_index++;
+				continue;
 			}
-			up_down++;
+			else if(!is_character(s[last_index])){
+				last_index--;
+				continue;
+			}
+
+			char start_char = lower(s[start_index]);
+			char last_char = lower(s[last_index]);
+
+			if(start_char != last_char) return false;
+
+			start_index++;
+			last_index--;
 		}
 
-		index = numRows - 1;
-
-		while(index < s.size() and index >= 0){
-			ans += s[index];
-			index += (numRows - 2) * 2 + 2;
-		}
-
-		return ans;
-    }
+		return true;
+	}
 };
 
 void solve(){
 	string s, ss;
-	int k;
+	bool is_true;
 
-	cin >> s >> k >> ss;
+	cin >> s >> is_true;
 
 	Solution obj; 
 
-	if(obj.convert(s, k) == ss){
+	if(obj.isPalindrome(s) == is_true){
 		//cout << obj.convert(s, k) << " " << ss << endl;
-		cout << true << endl;
+		cout << "Accepted"  << endl;
 	}
-	else cout << false << endl;
+	else cout << "Wrong Answer" << endl;
 	
 }
 
