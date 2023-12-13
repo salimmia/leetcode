@@ -35,14 +35,14 @@ public:
 			if(start_char != last_char) return false;
 
 			start_index++;
-			last_index--;
+			last_index;
 		}
 
 		return true;
 	}
 };
 
-void solve(){
+void solve(int test_case){
 	string s, ss;
 	bool is_true;
 
@@ -54,7 +54,7 @@ void solve(){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
-	else cout << "Wrong Answer" << endl;
+	else cout << "Wrong Answer on test " << test_case << endl;
 	
 }
 
@@ -63,9 +63,9 @@ int main(){
 
 	cin >> t;
 
-	while(t--){
-		solve();
+	for(int test = 1; test <= t; test++){
+		solve(test);
 	}
-
+	
 	return 0;
 }
