@@ -4,56 +4,65 @@ using namespace std;
 
 class Solution{
 public:
-	string convert(string s, int numRows){
-		if(numRows == 1 or numRows >= s.size()) return s;
+	int minSubArrayLen(int terget,  vector<int>& nums){
+		int now_sum = 0, left = 0, right = -1;
+		
+		int sz = nums.size();
+		
+		int min_len = nums.size() + 1;
+		
+		while(right < sz - 1){
+			now_sum += nums[++right];
 
-		int index = 0, direction = false;
+			while(now_sum - nums[left] >= terget){
+				now_sum -= nums[left++];
+			}
 
-		vector<string> row(numRows, "");
-
-		for(int i = 0; i < s.size(); i++){
-			if(index == 0 or index == numRows - 1) direction ^= 1;
-
-			row[index] += s[i];
-
-			if(direction) index++;
-			else index--;
+			if(now_sum >= terget) min_len = min(min_len, right - left + 1);
 		}
-
-		string zigzag = "";
-
-		for(auto _row: row){
-			zigzag += _row;
-		}
-
-		return zigzag;
-
+		
+		if(min_len == nums.size() + 1) return 0;
+		
+		return min_len;
 	}
 };
 
-void solve(){
-	string s, ss;
-	int k;
+void solve(int test_case){
+	int n, terget;
+	int ans;
+
+	cin >> n >> terget >> ans;
+
+	vector<int>v;
+
+	for(int i = 0; i < n; i++){
+		int x;
+		cin >> x;
+		v.push_back(x);
+	}
 
 	Solution obj;
 
-	cin >> s >> k >> ss;
-
-	if(obj.convert(s, k) == ss){
-		cout << "Accepted" << endl;
-	}
-	else cout << "Wrong Answer" << endl;
+	int min_len = obj.minSubArrayLen(terget, v);
 	
-	return;
+	cout << min_len << endl;
+
+	if(min_len == ans){
+		//cout << obj.convert(s, k) << " " << ss << endl;
+		cout << "Accepted"  << endl;
+	}
+	else cout << "Wrong Answer on test " << test_case << endl;
+	
 }
+
 
 int main(){
 	int t;
 
 	cin >> t;
 
-	while(t--){
-		solve();
+	for(int test = 1; test <= t; test++){
+		solve(test);
 	}
 	
 	return 0;
