@@ -2,30 +2,36 @@
 
 using namespace std;
 
-class Solution {
+class Solution{
 public:
-	vector<int>twoSum(vector<int>&numbers, int terget){
-		int start_index = 0, last_index = numbers.size() - 1;
+	int minSubArrayLen(int terget,  vector<int>& nums){
+		int now_sum = 0, left = 0, right = -1;
 		
-		int sum = numbers[start_index] + numbers[last_index];
-		while(sum != terget){
-			if(sum < terget){
-				sum -= numbers[start_index];
-				sum += numbers[++start_index];
+		int sz = nums.size();
+		
+		int min_len = nums.size() + 1;
+		
+		while(right < sz - 1){
+			now_sum += nums[++right];
+
+			while(now_sum - nums[left] >= terget){
+				now_sum -= nums[left++];
 			}
-			else{
-				sum -= numbers[last_index];
-				sum += numbers[--last_index];
-			}
+
+			if(now_sum >= terget) min_len = min(min_len, right - left + 1);
 		}
-		return {start_index + 1, last_index + 1};	
+		
+		if(min_len == nums.size() + 1) return 0;
+		
+		return min_len;
 	}
 };
 
 void solve(int test_case){
 	int n, terget;
+	int ans;
 
-	cin >> n >> terget;
+	cin >> n >> terget >> ans;
 
 	vector<int>v;
 
@@ -37,25 +43,18 @@ void solve(int test_case){
 
 	Solution obj;
 
-	vector<int>indexes = obj.twoSum(v, terget);
-	for(auto x: indexes) cout << x << " ";
-	cout << endl;
+	int min_len = obj.minSubArrayLen(terget, v);
+	
+	cout << min_len << endl;
 
-	vector<int>ans;
-
-	for(int i = 0; i < 2; i++){
-		int x;
-		cin >> x;
-		ans.push_back(x);
-	}
-
-	if(ans == indexes){
+	if(min_len == ans){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
 	else cout << "Wrong Answer on test " << test_case << endl;
 	
 }
+
 
 int main(){
 	int t;
@@ -68,3 +67,5 @@ int main(){
 	
 	return 0;
 }
+
+

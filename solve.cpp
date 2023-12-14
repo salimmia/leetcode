@@ -4,25 +4,44 @@ using namespace std;
 
 class Solution {
 public:
-	int maxArea(vector<int>&height){
-		int left = 0, right = height.size() - 1;
+	bool ok(vector<int> &prefix, int len, int terget){
+		for(int index = 1; index + len - 1 < prefix.size(); index++){
+			if(prefix[index + len - 1] - prefix[index - 1] >= terget) return true;
+		}
+		return false;
+	}
 
-		int _max = 0;
-		while(left < right){
-			_max = max(_max, min(height[left], height[right]) * (right - left));
+	int minSubArrayLen(int terget,  vector<int>& nums){
+		vector<int>prefix(nums.size() + 1);
+		prefix[0] = 0;
 
-			if(height[left] < height[right]) left++;
-			else right--;
+		for(int index = 0; index < nums.size(); index++){
+			prefix[index + 1] = prefix[index] + nums[index];
+			//cout << prefix[index + 1] << " ";
+		}
+		//cout << endl;
+
+		int lo = 1, hi = (int) nums.size(), ret = 0;
+
+		while(lo <= hi){
+			int mid = (lo + hi) / 2;
+
+			if(ok(prefix, mid, terget)){
+				hi = mid - 1;
+				ret = mid;
+			}
+			else lo = mid + 1;
 		}
 
-		return _max;
+		return ret;
 	}
 };
 
 void solve(int test_case){
 	int n, terget;
+	int ans;
 
-	cin >> n >> terget;
+	cin >> n >> terget >> ans;
 
 	vector<int>v;
 
@@ -34,11 +53,11 @@ void solve(int test_case){
 
 	Solution obj;
 
-	int max_area = obj.maxArea(v);
+	int min_len = obj.minSubArrayLen(terget, v);
 	
-	cout << max_area << endl;
+	cout << min_len << endl;
 
-	if(max_area == terget){
+	if(min_len == ans){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
