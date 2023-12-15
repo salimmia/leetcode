@@ -4,50 +4,38 @@ using namespace std;
 
 class Solution{
 public:
-	int minSubArrayLen(int terget,  vector<int>& nums){
-		int now_sum = 0, left = 0, right = -1;
-		
-		int sz = nums.size();
-		
-		int min_len = nums.size() + 1;
-		
-		while(right < sz - 1){
-			now_sum += nums[++right];
+	bool canConstruct(string ransomNote, string magazine){
+		vector<int>character(26, 0);
 
-			while(now_sum - nums[left] >= terget){
-				now_sum -= nums[left++];
-			}
-
-			if(now_sum >= terget) min_len = min(min_len, right - left + 1);
+		for(auto x: magazine){
+			character[x - 'a']++;
 		}
-		
-		if(min_len == nums.size() + 1) return 0;
-		
-		return min_len;
+		for(auto x: ransomNote){
+			if(character[x - 'a'] == 0) return false;
+			character[x - 'a']--;
+		}
+			
+		return true;
 	}
 };
 
 void solve(int test_case){
-	int n, terget;
+	int n, m, terget;
 	int ans;
 
-	cin >> n >> terget >> ans;
+	string ransomNote, magazine;
 
-	vector<int>v;
-
-	for(int i = 0; i < n; i++){
-		int x;
-		cin >> x;
-		v.push_back(x);
-	}
+	cin >> n >> m >> ans;
+	
+	cin >> ransomNote >> magazine;
 
 	Solution obj;
 
-	int min_len = obj.minSubArrayLen(terget, v);
+	int is_possible = obj.canConstruct(ransomNote, magazine);
 	
-	cout << min_len << endl;
+	cout << is_possible << endl;
 
-	if(min_len == ans){
+	if(is_possible == ans){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
