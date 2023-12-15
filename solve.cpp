@@ -4,36 +4,22 @@ using namespace std;
 
 class Solution {
 public:
-	bool ok(vector<int> &prefix, int len, int terget){
-		for(int index = 1; index + len - 1 < prefix.size(); index++){
-			if(prefix[index + len - 1] - prefix[index - 1] >= terget) return true;
-		}
-		return false;
-	}
+	int lengthOfLongestSubstring(string s){
+		int left = 0, right = -1, max_length = 0;
+		vector<int> cnt_char(200, 0);
+		
+		int sz = s.size();
 
-	int minSubArrayLen(int terget,  vector<int>& nums){
-		vector<int>prefix(nums.size() + 1);
-		prefix[0] = 0;
+		while(right < sz - 1){
+			cnt_char[s[++right] - ' ']++;
 
-		for(int index = 0; index < nums.size(); index++){
-			prefix[index + 1] = prefix[index] + nums[index];
-			//cout << prefix[index + 1] << " ";
-		}
-		//cout << endl;
-
-		int lo = 1, hi = (int) nums.size(), ret = 0;
-
-		while(lo <= hi){
-			int mid = (lo + hi) / 2;
-
-			if(ok(prefix, mid, terget)){
-				hi = mid - 1;
-				ret = mid;
+			while(cnt_char[s[right] - ' '] > 1){
+				cnt_char[s[left++] - ' ']--;
 			}
-			else lo = mid + 1;
-		}
 
-		return ret;
+			max_length = max(max_length, right - left + 1);
+		}
+		return max_length;
 	}
 };
 
@@ -41,23 +27,21 @@ void solve(int test_case){
 	int n, terget;
 	int ans;
 
-	cin >> n >> terget >> ans;
+	cin >> n >>  ans;
 
 	vector<int>v;
 
-	for(int i = 0; i < n; i++){
-		int x;
-		cin >> x;
-		v.push_back(x);
-	}
+	string s;
+	
+	cin >> s;
 
 	Solution obj;
 
-	int min_len = obj.minSubArrayLen(terget, v);
+	int max_len = obj.lengthOfLongestSubstring(s);
 	
-	cout << min_len << endl;
+	cout << max_len << endl;
 
-	if(min_len == ans){
+	if(max_len == ans){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
