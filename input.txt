@@ -1,9 +1,15 @@
-3
-2 3 1
-aa aab
+5
+3 1
+egg add
 
-1 1 0
-a b
+3 0
+foo bar
 
-2 2 0
-aa ab
+5 1
+paper title
+
+8 0
+bbbaaaba aaabbbba
+
+4 0
+badc baba

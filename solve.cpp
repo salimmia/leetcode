@@ -4,26 +4,27 @@ using namespace std;
 
 class Solution {
 public:
-	int lengthOfLongestSubstring(string s){
-		int left = 0, right = -1, max_length = 0;
-		vector<int> cnt_char(200, 0);
-		
-		int sz = s.size();
+	bool isIsomorphic(string s, string t) {
+		unordered_map<char, char> mps, mpt;
 
-		while(right < sz - 1){
-			cnt_char[s[++right] - ' ']++;
-
-			while(cnt_char[s[right] - ' '] > 1){
-				cnt_char[s[left++] - ' ']--;
+		for (int i = 0; i < s.size(); i++) {
+			if (mps.find(s[i]) != mps.end()) {
+				if (mps[s[i]] != t[i]) return false;
 			}
 
-			max_length = max(max_length, right - left + 1);
+			mps[s[i]] = t[i];
+
+			if (mpt.find(t[i]) != mpt.end()) {
+				if (mpt[t[i]] != s[i]) return false;
+			}
+
+			mpt[t[i]] = s[i];
 		}
-		return max_length;
+		return true;
 	}
 };
 
-void solve(int test_case){
+void solve(int test_case) {
 	int n, terget;
 	int ans;
 
@@ -31,32 +32,32 @@ void solve(int test_case){
 
 	vector<int>v;
 
-	string s;
-	
-	cin >> s;
+	string s, ss;
+
+	cin >> s >> ss;
 
 	Solution obj;
 
-	int max_len = obj.lengthOfLongestSubstring(s);
-	
-	cout << max_len << endl;
+	int is_true = obj.isIsomorphic(s, ss);
 
-	if(max_len == ans){
+	cout << is_true << endl;
+
+	if (is_true == ans) {
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
 	else cout << "Wrong Answer on test " << test_case << endl;
-	
+
 }
 
-int main(){
+int main() {
 	int t;
 
 	cin >> t;
 
-	for(int test = 1; test <= t; test++){
+	for (int test = 1; test <= t; test++) {
 		solve(test);
 	}
-	
+
 	return 0;
 }
