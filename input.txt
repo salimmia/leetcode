@@ -1,15 +1,9 @@
-5
-3 1
-egg add
+3
+1
+abba dog_cat_cat_dog
 
-3 0
-foo bar
+0
+abba dog_cat_cat_fish
 
-5 1
-paper title
-
-8 0
-bbbaaaba aaabbbba
-
-4 0
-badc baba
+0
+aaaa dog_cat_cat_dog
