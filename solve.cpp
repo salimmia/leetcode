@@ -4,22 +4,38 @@ using namespace std;
 
 class Solution {
 public:
-	int lengthOfLongestSubstring(string s){
-		int left = 0, right = -1, max_length = 0;
-		vector<int> cnt_char(200, 0);
-		
-		int sz = s.size();
+	int wordPattern(string pattern, string s){
+		int sz_p = pattern.size(), sz_s = s.size();
 
-		while(right < sz - 1){
-			cnt_char[s[++right] - ' ']++;
+		unordered_map<char, string> p_s;
+		unordered_map<string, char> s_p;
 
-			while(cnt_char[s[right] - ' '] > 1){
-				cnt_char[s[left++] - ' ']--;
+		int i = 0, j = 0;
+
+		while(j < sz_s){
+			if(i >= sz_s) return false;
+
+			string word = "";
+
+			while(j < sz_s && s[j] != '_'){ // replace '_' to ' '
+				word += s[j++];
 			}
 
-			max_length = max(max_length, right - left + 1);
+			if(p_s.find(pattern[i]) != p_s.end()){
+				if(p_s[pattern[i]] != word) return false;
+			}
+
+			if(s_p.find(word) != s_p.end()){
+				if(s_p[word] != pattern[i]) return false;
+			}
+
+			p_s[pattern[i]] = word;
+			s_p[word] = pattern[i++];
+			j++;
 		}
-		return max_length;
+		if(i < sz_p) return false;
+
+		return true;
 	}
 };
 
@@ -27,21 +43,21 @@ void solve(int test_case){
 	int n, terget;
 	int ans;
 
-	cin >> n >>  ans;
+	cin >>  ans;
 
 	vector<int>v;
 
-	string s;
+	string s, ss;
 	
-	cin >> s;
+	cin >> s >> ss;
 
 	Solution obj;
 
-	int max_len = obj.lengthOfLongestSubstring(s);
+	int is_true = obj.wordPattern(s, ss);
 	
-	cout << max_len << endl;
+	cout << is_true << endl;
 
-	if(max_len == ans){
+	if(is_true == ans){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}

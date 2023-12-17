@@ -1,9 +1,9 @@
 3
-2 3 1
-aa aab
+1
+abba dog_cat_cat_dog
 
-1 1 0
-a b
+0
+abba dog_cat_cat_fish
 
-2 2 0
-aa ab
+0
+aaaa dog_cat_cat_dog
