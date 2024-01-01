@@ -1,6 +1,6 @@
 2
-1
-anagram nagaram
+6
+eat tea tan ate nat bat
 
-0
-rat car
+1
+a

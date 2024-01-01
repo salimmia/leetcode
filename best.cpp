@@ -4,38 +4,49 @@ using namespace std;
 
 class Solution{
 public:
-	bool canConstruct(string ransomNote, string magazine){
-		vector<int>character(26, 0);
+	vector<vector<string>> groupAnagrams(vector<string> &strs){
+		vector<vector<string>> ans;
+		map<string, vector<string>> ret;
 
-		for(auto x: magazine){
-			character[x - 'a']++;
+		for(int i = 0; i < strs.size(); i++){
+			string now = strs[i];
+
+			sort(now.begin(), now.end());
+
+			ret[now].push_back(strs[i]);
 		}
-		for(auto x: ransomNote){
-			if(character[x - 'a'] == 0) return false;
-			character[x - 'a']--;
+		for(auto it: ret){
+			ans.push_back(it.second);	
 		}
-			
-		return true;
+
+		return ans;
 	}
 };
 
 void solve(int test_case){
-	int n, m, terget;
-	int ans;
+	int n;
 
-	string ransomNote, magazine;
+	cin >> n;
 
-	cin >> n >> m >> ans;
+	vector<string> v;
 	
-	cin >> ransomNote >> magazine;
+	for(int i = 0; i < n; i++) {
+		string s;
+		cin >> s;
+
+		v.push_back(s);
+	}
 
 	Solution obj;
 
-	int is_possible = obj.canConstruct(ransomNote, magazine);
+	vector<vector<string>> vv = obj.groupAnagrams(v);
 	
-	cout << is_possible << endl;
+	for(auto x: vv){
+		for(auto xx: x) cout << xx << " ";
+		cout << endl;
+	}
 
-	if(is_possible == ans){
+	if(1){
 		//cout << obj.convert(s, k) << " " << ss << endl;
 		cout << "Accepted"  << endl;
 	}
