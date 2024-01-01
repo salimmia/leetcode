@@ -1,9 +1,6 @@
-3
+2
+6
+eat tea tan ate nat bat
+
 1
-abba dog_cat_cat_dog
-
-0
-abba dog_cat_cat_fish
-
-0
-aaaa dog_cat_cat_dog
+a

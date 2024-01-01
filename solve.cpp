@@ -5,6 +5,7 @@ using namespace std;
 class Solution {
 public:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	bool isIsomorphic(string s, string t) {
 		unordered_map<char, char> mps, mpt;
 
@@ -24,35 +25,27 @@ public:
 =======
 	int wordPattern(string pattern, string s){
 		int sz_p = pattern.size(), sz_s = s.size();
+=======
+	bool isAnagram(string s, string t){
+		vector<int> cnt(26);
+>>>>>>> solve
 
-		unordered_map<char, string> p_s;
-		unordered_map<string, char> s_p;
-
-		int i = 0, j = 0;
-
-		while(j < sz_s){
-			if(i >= sz_s) return false;
-
-			string word = "";
-
-			while(j < sz_s && s[j] != '_'){ // replace '_' to ' '
-				word += s[j++];
-			}
-
-			if(p_s.find(pattern[i]) != p_s.end()){
-				if(p_s[pattern[i]] != word) return false;
-			}
-
-			if(s_p.find(word) != s_p.end()){
-				if(s_p[word] != pattern[i]) return false;
-			}
-
-			p_s[pattern[i]] = word;
-			s_p[word] = pattern[i++];
-			j++;
+		for(int index = 0; index < s.size(); index++){
+			cnt[s[index] - 'a']++;
 		}
-		if(i < sz_p) return false;
+		
+		for(int index = 0; index < t.size(); index++){
+			cnt[t[index] - 'a']--;
+		}
 
+<<<<<<< HEAD
+>>>>>>> solve
+=======
+		for(int ch = 0; ch < 26; ch++){
+			if(cnt[ch] != 0){
+				return false;
+			}
+		}
 >>>>>>> solve
 		return true;
 	}
@@ -77,6 +70,7 @@ void solve(int test_case) {
 	Solution obj;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int is_true = obj.isIsomorphic(s, ss);
 
 	cout << is_true << endl;
@@ -84,6 +78,9 @@ void solve(int test_case) {
 	if (is_true == ans) {
 =======
 	int is_true = obj.wordPattern(s, ss);
+=======
+	int is_true = obj.isAnagram(s, ss);
+>>>>>>> solve
 	
 	cout << is_true << endl;
 
