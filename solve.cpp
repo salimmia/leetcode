@@ -4,50 +4,33 @@ using namespace std;
 
 class Solution {
 public:
-<<<<<<< HEAD
-<<<<<<< HEAD
-	bool isIsomorphic(string s, string t) {
-		unordered_map<char, char> mps, mpt;
+	vector<int> twoSum(vector<int> &nums, int terget){
+		vector<pair<int, int> > v;
+		vector<int> ret;
 
-		for (int i = 0; i < s.size(); i++) {
-			if (mps.find(s[i]) != mps.end()) {
-				if (mps[s[i]] != t[i]) return false;
-			}
-
-			mps[s[i]] = t[i];
-
-			if (mpt.find(t[i]) != mpt.end()) {
-				if (mpt[t[i]] != s[i]) return false;
-			}
-
-			mpt[t[i]] = s[i];
+		for(int i = 0; i < nums.size(); i++){
+			v.push_back({nums[i], i});
 		}
-=======
-	int wordPattern(string pattern, string s){
-		int sz_p = pattern.size(), sz_s = s.size();
-=======
-	bool isAnagram(string s, string t){
-		vector<int> cnt(26);
->>>>>>> solve
-
-		for(int index = 0; index < s.size(); index++){
-			cnt[s[index] - 'a']++;
-		}
+		sort(v.begin(), v.end());
 		
-		for(int index = 0; index < t.size(); index++){
-			cnt[t[index] - 'a']--;
-		}
+		for(int i = 0; i < v.size(); i++){
+			int lo = i + 1, hi = v.size() - 1;
 
-<<<<<<< HEAD
->>>>>>> solve
-=======
-		for(int ch = 0; ch < 26; ch++){
-			if(cnt[ch] != 0){
-				return false;
+			while(lo < hi){
+				int mid = (lo + hi) >> 1;
+
+				if(v[i].first + v[mid].first >= terget){
+					hi = mid;
+				}
+				else lo = mid + 1;
+			}
+			if(v[i].first + v[lo].first == terget){
+				ret.push_back(v[i].second);
+				ret.push_back(v[lo].second);
+				break;
 			}
 		}
->>>>>>> solve
-		return true;
+		return ret;
 	}
 };
 
