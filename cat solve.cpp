@@ -1,3 +1,7 @@
+#include<bits/stdc++.h>
+
+using namespace std;
+
 class Solution {
 public:
 	int sq(int n){
@@ -6,8 +10,8 @@ public:
 	bool isHappy(int n){
 		unordered_map<int, bool>mp;
 		
+		mp[n] = true;
 		while(n != 1 && mp[n] == false){
-			mp[n] = true;
 			int now = 0;
 
 			while(n){
@@ -15,8 +19,8 @@ public:
 				n /= 10;
 			}
 			n = now;
+			mp[n] = true;
 		}
-		mp[n] = true;
 		return mp[1];
 	}
 };
